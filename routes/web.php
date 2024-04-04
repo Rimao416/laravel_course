@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,10 +40,32 @@ Route::get('/', function () {
 // On peut regrouper plusieurs routes elles ont le meme point commun par exemple, nos routes ont un meme prefix
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/', function (Request $request) {
-        return [
-            "name" => $request->input('name', 'John Doe'),
-            "article" => "Article 1"
+        // $post=new Post();
+        // $post->title="Mon titre";
+        // $post->slug="mon-slug";
+        // $post->content="Mon contenu";
+        // $post->save();
+        
+        // Créer à partir d'un tableau
+        $post = [
+            "title" => "Mon titre",
+            "slug" => "mon-slug-2",
+            "content" => "Mon contenu"
         ];
+        Post::create($post);
+        
+        
+        
+        return Post::all();
+        // return $post;
+        // return [
+        //     "name" => $request->input('name', 'John Doe'),
+        //     "article" => "Article 1"
+        // ];
+
+
+
+
     })->name('index');
     // Ceci est une route qui retourne un fichier Json avec un param et un where qui sert à la recherche d'un article
     Route::get('/{slig}-{id}', function (string $slug, string $id) {
