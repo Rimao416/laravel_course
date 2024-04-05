@@ -22,12 +22,16 @@ Route::get('/', function () {
 
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
-    // Ceci est une route qui retourne un fichier Json avec un param et un where qui sert à la recherche d'un article
-    Route::get('/{slig}-{id}', [BlogController::class, 'show'])->where([
-        'id' => '[0-9]+',
-        'slug' => '[a-z0-9\-]+',
-    ])
-        ->name('show');
+    // CREATE
+    Route::get('/new', [BlogController::class, 'create'])->name('create');
+    Route::post('/new', [BlogController::class, 'store'])->name('create');
+    // UPDATE
+    Route::get('/{post}/edit', [BlogController::class, 'edit'])->name('edit');
+    Route::patch('/{post}/edit', [BlogController::class, 'update'])->name('update');
+    // DELETE
+    Route::get('/{slug}-{post}/delete', [BlogController::class, 'destroy'])->name('destroy');
+    // SHOW
+    Route::get('/{slug}-{post}', [BlogController::class, 'show'])->name('show');
 });
 
 
